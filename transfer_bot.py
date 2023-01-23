@@ -3,7 +3,23 @@ import requests
 import json
 import re
 from flask import Flask, request
+from apscheduler.schedulers.background import BackgroundScheduler
 import time
+
+def rang_timer():
+    link = 'https://api.opendota.com/api/explorer?sql=SELECT * FROM matches LIMIT 1'
+    r = requests.get(link)
+    data = r.json()
+    print(data)
+    #for i in data:
+    #    print(i['radiant_win'])
+    #textFW = len(data)
+    
+    #print(textFW)
+
+sched = BackgroundScheduler(daemon=True)
+sched.add_job(rang_timer,'interval',minutes=0.1)
+#sched.start()
 
 app = Flask(__name__)
 
@@ -14,7 +30,7 @@ server_id = 5
 url = 'http://transfer.commanda.keenetic.link'
 title = 'newTest'
 
-vk_session = vk_api.vk_api.VkApiGroup(token=token)
+vk_session = vk_api.vk_api.VkApiGroup(token=token, api_version='5.200')
 vk = vk_session.get_api()
 
 #важная хуйня!!!!!!!
@@ -32,14 +48,15 @@ def send_message(peer_id,group_id,textFW,conversation_message_id):
 def bot():
     data = request.get_json(force=True, silent=True)
     Mtype = data['type']#str
+
     
     if Mtype == 'confirmation':#confirmation
         return confirmation_code
     
     elif Mtype == 'message_new':
-        print('get')
         group_id = data['group_id']#int
         event_id = data['event_id']#int
+        date = data['object']['message']['date']
         from_id = data['object']['message']['from_id']#int
         id = data['object']['message']['id']#int
         attachments = data['object']['message']['attachments']#xyeta
@@ -58,16 +75,15 @@ def bot():
         #|||||||||||||||||||||||||||||
         if word_set.intersection(phrase_set) == set(['aboba']):
             
-            textFW = "abobus"
+            textFW = "abobus"+" "+str(date)
             send_message(peer_id,group_id,textFW,conversation_message_id)
             
         elif word_set.intersection(phrase_set) == set(['glad']):
             
-            textFW = "valakas"
+            textFW = f"valakas"
             send_message(peer_id,group_id,textFW,conversation_message_id)
             
         elif word_set.intersection(phrase_set) == set(['ранг']):
-            
             link = 'https://api.opendota.com/api/players/146636026'
             r = requests.get(link)
             data = r.json()
