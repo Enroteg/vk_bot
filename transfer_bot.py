@@ -1,3 +1,6 @@
+#НЕ РАБОТАЕТ
+
+
 import vk_api#import govna
 import requests
 import json
@@ -27,14 +30,14 @@ token='e857793a4ecc55efad8627bd0873474822dbf6c111a31929518dd773678e53f57050dd879
 group_id1 = 194284961
 secret_key = '65193637EB7F4FC5335BD31D581FA'
 server_id = 5
-url = 'http://transfer.commanda.keenetic.link'
+url = 'https://transfer.commanda.keenetic.link/post'
 title = 'newTest'
 
-vk_session = vk_api.vk_api.VkApiGroup(token=token, api_version='5.200')
+vk_session = vk_api.vk_api.VkApiGroup(token=token, api_version='5.131')
 vk = vk_session.get_api()
 
 #важная хуйня!!!!!!!
-#vk.groups.editCallbackServer(group_id=group_id, server_id=server_id, url=url, title=title, secret_key=secret_key)
+#vk.groups.editCallbackServer(group_id=group_id1, server_id=server_id, url=url, title=title, secret_key=secret_key)
 
 confirmation_code = vk.groups.getCallbackConfirmationCode(access_token=token, group_id=group_id1)['code']
 
@@ -51,7 +54,8 @@ def bot():
 
     
     if Mtype == 'confirmation':#confirmation
-        return confirmation_code
+        #return confirmation_code
+        return ('6261e0d6')
     
     elif Mtype == 'message_new':
         group_id = data['group_id']#int
@@ -95,4 +99,4 @@ def bot():
             
     return 'ok'
 if __name__ == '__main__':#start
-    app.run(host="0.0.0.0", port = "23659", ssl_context="adhoc")
+    app.run(host="0.0.0.0", port = "23659", ssl_context="adhoc", threaded=True)
