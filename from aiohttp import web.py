@@ -4,15 +4,15 @@ from vk_api.keyboard import VkKeyboard, VkKeyboardColor
 import json
 import requests
 import time
-#https://discord.com/app/invite-with-guild-onboarding/nHuSrt3p6W
-token='e857793a4ecc55efad8627bd0873474822dbf6c111a31929518dd773678e53f57050dd879014fa3979f33'
-group_id1 = 194284961
-secret_key = '65193637EB7F4FC5335BD31D581FA'
+#https://discord.com/app/invite-with-guild
+token='token'
+group_id1 = 
+secret_key = 'secret'
 server_id = 5
 url = 'http://transfer.commanda.keenetic.link/post'
 title = 'newTest'
 
-token='e857793a4ecc55efad8627bd0873474822dbf6c111a31929518dd773678e53f57050dd879014fa3979f33'
+token='token'
 vk_session = vk_api.vk_api.VkApiGroup(token=token, api_version='5.200')
 vk = vk_session.get_api()
 
@@ -96,9 +96,9 @@ async def hello(request):
         button_secret = data['secret']
         
         if button_payload[0] == "button_1":
-            snack = {"type": "show_snackbar","text": "Тут нихуя нет, долбоеб"}
+            snack = {"type": "show_snackbar","text": "Тут нихуя нет"}
         elif button_payload[0] == "open_discord_link": 
-            snack = {"type": "open_link","link": "https://discord.gg/nHuSrt3p6W"}
+            snack = {"type": "open_link","link": "https://discord.gg/"}
             
         event_data = json.dumps(snack)
         try:
